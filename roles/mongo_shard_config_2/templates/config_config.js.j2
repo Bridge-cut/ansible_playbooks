@@ -1,0 +1,14 @@
+cfg={
+      _id: "C",
+      members: [
+            {
+                  _id: 0,
+                  host: "{{ groups['mongo_shard_config_1'][0] }}:27017"
+            },
+            {
+                  _id: 1,
+                  host: "{{ groups['mongo_shard_config_2'][0] }}:27017"
+            }
+      ]
+};
+rs.initiate(cfg);

@@ -1,0 +1,21 @@
+cfg={
+      _id: "fish",
+      members: [
+            {
+                  _id: 0,
+                  host: "{{ groups['mongo_psa_primary'][0] }}:27017",
+                  priority: 2
+            },
+            {
+                  _id: 1,
+                  host: "{{ groups['mongo_psa_secondary'][0] }}:27017",
+                  priority: 1
+            },
+            {
+                  _id: 2,
+                  host: "{{ groups['mongo_psa_arbiter'][0] }}:27017",
+                  arbiterOnly: true
+            }
+      ]
+};
+rs.initiate(cfg);

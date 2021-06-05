@@ -1,0 +1,15 @@
+- name: mkdir /opt/mongo/primary
+  shell: mkdir -p /opt/mongo/primary
+- name: mkdir /opt/mongo/conf
+  shell: mkdir /opt/mongo/conf
+
+- name: copy primary conf
+  template: src=./templates/primary.conf.j2 dest=/opt/mongo/conf/primary.conf
+- name: copy replication conf
+  template: src=./templates/replication.js.j2 dest=/opt/mongo/conf/replication.js
+
+- name: start primary
+  shell: mongod -f /opt/mongo/conf/primary.conf
+
+- name: add nodes
+  shell: mongo 127.0.0.1:27017/admin /opt/mongo/conf/replication.js

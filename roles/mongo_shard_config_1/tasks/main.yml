@@ -1,0 +1,26 @@
+- name: mkdir /opt/mongo/config
+  shell: mkdir -p /opt/mongo/config
+- name: mkdir /opt/mongo/rs0
+  shell: mkdir /opt/mongo/rs0
+- name: mkdir /opt/mongo/rs1
+  shell: mkdir /opt/mongo/rs1
+- name: mkdir /opt/mongo/rs2
+  shell: mkdir /opt/mongo/rs2
+
+- name: mkdir /opt/mongo/conf
+  shell: mkdir /opt/mongo/conf
+
+- name: copy config confs
+  template: src=./templates/config.conf.j2 dest=/opt/mongo/conf/config.conf
+- name: copy config confs
+  template: src=./templates/rs0.conf.j2 dest=/opt/mongo/conf/rs0.conf
+- name: copy config confs
+  template: src=./templates/rs1.conf.j2 dest=/opt/mongo/conf/rs1.conf
+- name: copy config confs
+  template: src=./templates/rs2.conf.j2 dest=/opt/mongo/conf/rs2.conf
+
+- name: copy boot sh
+  template: src=./templates/boot.sh.j2 dest=/opt/mongo/conf/boot.sh mode=777
+
+- name: boot
+  shell: /bin/bash /opt/mongo/conf/boot.sh

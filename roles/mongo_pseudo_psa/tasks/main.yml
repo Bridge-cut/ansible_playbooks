@@ -1,0 +1,7 @@
+- name: initialize
+  include: initialize.yml
+
+- name: boot
+  shell: /bin/bash /opt/mongo/conf/boot.sh
+- name: add nodes
+  shell: mongo 127.0.0.1:27017/admin /opt/mongo/conf/replication.js

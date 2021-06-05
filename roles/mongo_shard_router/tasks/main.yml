@@ -1,0 +1,46 @@
+- name: mkdir /opt/mongo/router
+  shell: mkdir -p /opt/mongo/router
+- name: mkdir /opt/mongo/rs0
+  shell: mkdir /opt/mongo/rs0
+- name: mkdir /opt/mongo/rs1
+  shell: mkdir /opt/mongo/rs1
+- name: mkdir /opt/mongo/rs2
+  shell: mkdir /opt/mongo/rs2
+
+- name: mkdir /opt/mongo/conf
+  shell: mkdir /opt/mongo/conf
+
+- name: copy router confs
+  template: src=./templates/router.conf.j2 dest=/opt/mongo/conf/router.conf
+- name: copy router confs
+  template: src=./templates/rs0.conf.j2 dest=/opt/mongo/conf/rs0.conf
+- name: copy router confs
+  template: src=./templates/rs1.conf.j2 dest=/opt/mongo/conf/rs1.conf
+- name: copy router confs
+  template: src=./templates/rs2.conf.j2 dest=/opt/mongo/conf/rs2.conf
+
+- name: copy boot sh
+  template: src=./templates/boot.sh.j2 dest=/opt/mongo/conf/boot.sh mode=777
+- name: copy rs0_config
+  template: src=./templates/rs0_config.js.j2 dest=/opt/mongo/conf/rs0_config.js
+- name: copy rs1_config
+  template: src=./templates/rs1_config.js.j2 dest=/opt/mongo/conf/rs1_config.js
+- name: copy rs2_config
+  template: src=./templates/rs2_config.js.j2 dest=/opt/mongo/conf/rs2_config.js
+- name: copy add_shards
+  template: src=./templates/add_shards.js.j2 dest=/opt/mongo/conf/add_shards.js
+
+- name: boot
+  shell: /bin/bash /opt/mongo/conf/boot.sh
+
+- name: config rs0
+  shell: mongo 127.0.0.1:27016/admin /opt/mongo/conf/rs0_config.js
+- name: config rs1
+  shell: mongo 127.0.0.1:27015/admin /opt/mongo/conf/rs1_config.js
+- name: config rs2
+  shell: mongo 127.0.0.1:27014/admin /opt/mongo/conf/rs2_config.js
+
+- name: start mongos
+  shell: mongos -f /opt/mongo/conf/router.conf
+- name: add shards
+  shell: mongo 127.0.0.1:27017/admin /opt/mongo/conf/add_shards.js

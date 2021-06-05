@@ -1,0 +1,24 @@
+- name: update apt
+  apt: update_cache=yes
+- name: install dependence
+  apt: name=libcurl3
+- name: install dependence
+  apt: name=openssl
+- name: install dependence
+  apt: name=liblzma5
+
+- name: unarchive mongodb package
+  unarchive: src=mongodb-linux-x86_64-ubuntu1604-4.0.23.tgz dest=/opt/
+
+- name: cp /mongo/bin
+  shell: cp /opt/mongodb-linux-x86_64-ubuntu1604-4.0.23/bin/* /usr/local/bin/
+
+- name: mkdir /var/lib/mongo
+  shell: mkdir -p /var/lib/mongo
+- name: mkdir /var/log/mongodb
+  shell: mkdir -p /var/log/mongodb
+
+- name: chown ubuntu
+  shell: chown ubuntu /var/lib/mongo
+- name: chown ubuntu
+  shell: chown ubuntu /var/log/mongodb

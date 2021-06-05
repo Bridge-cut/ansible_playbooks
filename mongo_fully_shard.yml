@@ -1,0 +1,15 @@
+- hosts: mongo_servers
+  roles:
+    - role: mongo_fully_common
+
+- hosts: mongo_shard_config_1
+  roles:
+    - role: mongo_shard_config_1
+
+- hosts: mongo_shard_config_2
+  roles:
+    - role: mongo_shard_config_2
+
+- hosts: mongo_shard_router
+  roles:
+    - role: mongo_shard_router

@@ -1,0 +1,53 @@
+# mongod.conf
+
+# for documentation of all options, see:
+#   http://docs.mongodb.org/manual/reference/configuration-options/
+
+# Where and how to store data.
+storage:
+  dbPath: /opt/mongo/config_shard_2/rs0
+  journal:
+    enabled: true
+#  engine:
+#  mmapv1:
+#  wiredTiger:
+
+# where to write logging data.
+systemLog:
+  destination: file
+  logAppend: true
+  path: /opt/mongo/config_shard_2/rs0/mongod.log
+  component:
+    command:
+      verbosity: 5
+
+# network interfaces
+net:
+  port: 27012
+  bindIp: 0.0.0.0
+
+
+
+#processManagement:
+processManagement:
+  fork: true
+  pidFilePath: /opt/mongo/config_shard_2/rs0/mongod.pid
+  #timeZoneInfo: /usr/share/zoneinfo
+
+#security:
+
+#operationProfiling:
+
+#replication:
+replication:
+  replSetName: rs0
+
+#sharding:
+sharding:
+  clusterRole: shardsvr
+
+## Enterprise-Only Options:
+
+#auditLog:
+
+#snmp:

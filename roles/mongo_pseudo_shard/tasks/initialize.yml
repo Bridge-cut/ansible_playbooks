@@ -1,0 +1,100 @@
+- name: update apt
+  apt: update_cache=yes
+- name: install dependence
+  apt: name=libcurl3
+- name: install dependence
+  apt: name=openssl
+- name: install dependence
+  apt: name=liblzma5
+
+- name: unarchive mongodb package
+  unarchive: src=mongodb-linux-x86_64-ubuntu1604-4.0.23.tgz dest=/opt/
+
+- name: cp /mongo/bin
+  shell: cp /opt/mongodb-linux-x86_64-ubuntu1604-4.0.23/bin/* /usr/local/bin/
+
+- name: mkdir /var/lib/mongo
+  shell: mkdir -p /var/lib/mongo
+- name: mkdir /var/log/mongodb
+  shell: mkdir -p /var/log/mongodb
+
+- name: chown ubuntu
+  shell: chown ubuntu /var/lib/mongo
+- name: chown ubuntu
+  shell: chown ubuntu /var/log/mongodb
+
+- name: mkdir /opt/mongo/router_shard
+  shell: mkdir -p /opt/mongo/router_shard
+- name: mkdir /opt/mongo/router_shard/router
+  shell: mkdir /opt/mongo/router_shard/router
+- name: mkdir /opt/mongo/router_shard/rs0
+  shell: mkdir /opt/mongo/router_shard/rs0
+- name: mkdir /opt/mongo/router_shard/rs1
+  shell: mkdir /opt/mongo/router_shard/rs1
+- name: mkdir /opt/mongo/router_shard/rs2
+  shell: mkdir /opt/mongo/router_shard/rs2
+
+- name: mkdir /opt/mongo/config_shard_1
+  shell: mkdir /opt/mongo/config_shard_1
+- name: mkdir /opt/mongo/config_shard_1/config
+  shell: mkdir /opt/mongo/config_shard_1/config
+- name: mkdir /opt/mongo/config_shard_1/rs0
+  shell: mkdir /opt/mongo/config_shard_1/rs0
+- name: mkdir /opt/mongo/config_shard_1/rs1
+  shell: mkdir /opt/mongo/config_shard_1/rs1
+- name: mkdir /opt/mongo/config_shard_1/rs2
+  shell: mkdir /opt/mongo/config_shard_1/rs2
+
+- name: mkdir /opt/mongo/config_shard_2
+  shell: mkdir /opt/mongo/config_shard_2
+- name: mkdir /opt/mongo/config_shard_2/config
+  shell: mkdir /opt/mongo/config_shard_2/config
+- name: mkdir /opt/mongo/config_shard_2/rs0
+  shell: mkdir /opt/mongo/config_shard_2/rs0
+- name: mkdir /opt/mongo/config_shard_2/rs1
+  shell: mkdir /opt/mongo/config_shard_2/rs1
+- name: mkdir /opt/mongo/config_shard_2/rs2
+  shell: mkdir /opt/mongo/config_shard_2/rs2
+
+- name: mkdir /opt/mongo/conf
+  shell: mkdir /opt/mongo/conf
+
+- name: copy router_shard confs
+  template: src=./templates/router_shard_router.conf.j2 dest=/opt/mongo/conf/router_shard_router.conf
+- name: copy router_shard confs
+  template: src=./templates/router_shard_rs0.conf.j2 dest=/opt/mongo/conf/router_shard_rs0.conf
+- name: copy router_shard confs
+  template: src=./templates/router_shard_rs1.conf.j2 dest=/opt/mongo/conf/router_shard_rs1.conf
+- name: copy router_shard confs
+  template: src=./templates/router_shard_rs2.conf.j2 dest=/opt/mongo/conf/router_shard_rs2.conf
+
+- name: copy config_shard_1 confs
+  template: src=./templates/config_shard_1_config.conf.j2 dest=/opt/mongo/conf/config_shard_1_config.conf
+- name: copy config_shard_1 confs
+  template: src=./templates/config_shard_1_rs0.conf.j2 dest=/opt/mongo/conf/config_shard_1_rs0.conf
+- name: copy config_shard_1 confs
+  template: src=./templates/config_shard_1_rs1.conf.j2 dest=/opt/mongo/conf/config_shard_1_rs1.conf
+- name: copy config_shard_1 confs
+  template: src=./templates/config_shard_1_rs2.conf.j2 dest=/opt/mongo/conf/config_shard_1_rs2.conf
+
+- name: copy config_shard_2 confs
+  template: src=./templates/config_shard_2_config.conf.j2 dest=/opt/mongo/conf/config_shard_2_config.conf
+- name: copy config_shard_2 confs
+  template: src=./templates/config_shard_2_rs0.conf.j2 dest=/opt/mongo/conf/config_shard_2_rs0.conf
+- name: copy config_shard_2 confs
+  template: src=./templates/config_shard_2_rs1.conf.j2 dest=/opt/mongo/conf/config_shard_2_rs1.conf
+- name: copy config_shard_2 confs
+  template: src=./templates/config_shard_2_rs2.conf.j2 dest=/opt/mongo/conf/config_shard_2_rs2.conf
+
+- name: copy boot sh
+  template: src=./templates/boot.sh.j2 dest=/opt/mongo/conf/boot.sh mode=777
+- name: copy rs0_config
+  template: src=./templates/rs0_config.js.j2 dest=/opt/mongo/conf/rs0_config.js
+- name: copy rs1_config
+  template: src=./templates/rs1_config.js.j2 dest=/opt/mongo/conf/rs1_config.js
+- name: copy rs2_config
+  template: src=./templates/rs2_config.js.j2 dest=/opt/mongo/conf/rs2_config.js
+- name: copy config_config
+  template: src=./templates/config_config.js.j2 dest=/opt/mongo/conf/config_config.js
+- name: copy add_shards
+  template: src=./templates/add_shards.js.j2 dest=/opt/mongo/conf/add_shards.js

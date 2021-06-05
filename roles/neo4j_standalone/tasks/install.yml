@@ -1,0 +1,11 @@
+- name: update apt
+  apt: update_cache=yes
+ 
+- name: mkdir /usr/local/neo4j
+  shell: mkdir /usr/local/neo4j
+
+- name: unarchive mongodb package
+  unarchive: src=neo4j-community-4.2.3-unix.tar dest=/usr/local/neo4j/
+
+- name: start neo4j
+  shell: source /etc/profile;/usr/local/neo4j/neo4j-community-4.2.3/bin/neo4j start

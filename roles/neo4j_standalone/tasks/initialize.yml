@@ -1,0 +1,14 @@
+- name: mkdir /usr/lib/jvm
+  shell: mkdir /usr/lib/jvm
+
+- name: unarchive jdk package
+  unarchive: src=openjdk-11.0.2_linux-x64_bin.tar.gz dest=/usr/lib/jvm
+
+- name: vim bashrc
+  shell: echo "export JAVA_HOME=/usr/lib/jvm/jdk-11.0.2" >> /etc/profile
+- name: vim bashrc
+  shell: echo "export JRE_HOME=${JAVA_HOME}/jre" >> /etc/profile
+- name: vim bashrc
+  shell: echo "export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib" >> /etc/profile
+- name: vim bashrc
+  shell: echo "export PATH=${JAVA_HOME}/bin:$PATH" >> /etc/profile

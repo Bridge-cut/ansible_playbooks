@@ -1,0 +1,4 @@
+- hosts: mongo_pseudo_psa
+  remote_user: root
+  roles:
+    - mongo_pseudo_psa

@@ -1,0 +1,10 @@
+- name: mkdir /opt/mongo/secondary
+  shell: mkdir -p /opt/mongo/secondary
+- name: mkdir /opt/mongo/conf
+  shell: mkdir /opt/mongo/conf
+
+- name: copy secondary conf
+  template: src=./templates/secondary.conf.j2 dest=/opt/mongo/conf/secondary.conf
+
+- name: start secondary
+  shell: mongod -f /opt/mongo/conf/secondary.conf

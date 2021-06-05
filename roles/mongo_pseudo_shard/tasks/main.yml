@@ -1,0 +1,19 @@
+- name: initialize
+  include: initialize.yml
+
+- name: boot
+  shell: /bin/bash /opt/mongo/conf/boot.sh
+
+- name: config rs0
+  shell: mongo 127.0.0.1:27006/admin /opt/mongo/conf/rs0_config.js
+- name: config rs1
+  shell: mongo 127.0.0.1:27007/admin /opt/mongo/conf/rs1_config.js
+- name: config rs2
+  shell: mongo 127.0.0.1:27008/admin /opt/mongo/conf/rs2_config.js
+- name: config config
+  shell: mongo 127.0.0.1:27015/admin /opt/mongo/conf/config_config.js
+
+- name: start mongos
+  shell: mongos -f /opt/mongo/conf/router_shard_router.conf
+- name: add shards
+  shell: mongo 127.0.0.1:27017/admin /opt/mongo/conf/add_shards.js

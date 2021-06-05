@@ -1,0 +1,15 @@
+- hosts: mongo_servers
+  roles:
+    - role: mongo_fully_common
+
+- hosts: mongo_psa_secondary
+  roles:
+    - role: mongo_psa_secondary
+
+- hosts: mongo_psa_arbiter
+  roles:
+    - role: mongo_psa_arbiter
+
+- hosts: mongo_psa_primary
+  roles:
+    - role: mongo_psa_primary

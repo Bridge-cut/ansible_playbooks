@@ -1,0 +1,4 @@
+- hosts: mongo
+  remote_user: root
+  roles:
+    - mongo_standalone

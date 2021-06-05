@@ -1,0 +1,44 @@
+- name: update apt
+  apt: update_cache=yes
+- name: install dependence
+  apt: name=libcurl3
+- name: install dependence
+  apt: name=openssl
+- name: install dependence
+  apt: name=liblzma5
+
+- name: unarchive mongodb package
+  unarchive: src=mongodb-linux-x86_64-ubuntu1604-4.0.23.tgz dest=/opt/
+
+- name: cp /mongo/bin
+  shell: cp /opt/mongodb-linux-x86_64-ubuntu1604-4.0.23/bin/* /usr/local/bin/
+
+- name: mkdir /var/lib/mongo
+  shell: mkdir -p /var/lib/mongo
+- name: mkdir /var/log/mongodb
+  shell: mkdir -p /var/log/mongodb
+
+- name: chown ubuntu
+  shell: chown ubuntu /var/lib/mongo
+- name: chown ubuntu
+  shell: chown ubuntu /var/log/mongodb
+
+- name: mkdir /opt/mongo/primary
+  shell: mkdir -p /opt/mongo/primary
+- name: mkdir /opt/mongo/secondary
+  shell: mkdir /opt/mongo/secondary
+- name: mkdir /opt/mongo/arbiter
+  shell: mkdir /opt/mongo/arbiter
+- name: mkdir /opt/mongo/conf
+  shell: mkdir /opt/mongo/conf
+
+- name: copy primary conf
+  template: src=./templates/primary.conf.j2 dest=/opt/mongo/conf/primary.conf
+- name: copy secondary conf
+  template: src=./templates/secondary.conf.j2 dest=/opt/mongo/conf/secondary.conf
+- name: copy arbiter conf
+  template: src=./templates/arbiter.conf.j2 dest=/opt/mongo/conf/arbiter.conf
+- name: copy boot sh
+  template: src=./templates/boot.sh.j2 dest=/opt/mongo/conf/boot.sh mode=777
+- name: copy replication conf
+  template: src=./templates/replication.js.j2 dest=/opt/mongo/conf/replication.js

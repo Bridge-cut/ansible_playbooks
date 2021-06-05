@@ -1,0 +1,13 @@
+#!/bin/bash
+
+mongod -f /opt/mongo/conf/router_shard_rs0.conf
+mongod -f /opt/mongo/conf/router_shard_rs1.conf
+mongod -f /opt/mongo/conf/router_shard_rs2.conf
+mongod -f /opt/mongo/conf/config_shard_1_config.conf
+mongod -f /opt/mongo/conf/config_shard_1_rs0.conf
+mongod -f /opt/mongo/conf/config_shard_1_rs1.conf
+mongod -f /opt/mongo/conf/config_shard_1_rs2.conf
+mongod -f /opt/mongo/conf/config_shard_2_config.conf
+mongod -f /opt/mongo/conf/config_shard_2_rs0.conf
+mongod -f /opt/mongo/conf/config_shard_2_rs1.conf
+mongod -f /opt/mongo/conf/config_shard_2_rs2.conf

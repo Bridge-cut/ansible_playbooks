@@ -1,0 +1,10 @@
+- name: mkdir /opt/mongo/arbiter
+  shell: mkdir -p /opt/mongo/arbiter
+- name: mkdir /opt/mongo/conf
+  shell: mkdir /opt/mongo/conf
+
+- name: copy arbiter conf
+  template: src=./templates/arbiter.conf.j2 dest=/opt/mongo/conf/arbiter.conf
+
+- name: start arbiter
+  shell: mongod -f /opt/mongo/conf/arbiter.conf

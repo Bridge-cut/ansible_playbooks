@@ -1,0 +1,4 @@
+- hosts: neo4j
+  remote_user: root
+  roles:
+    - neo4j_standalone

@@ -1,0 +1,47 @@
+# mongod.conf
+
+# for documentation of all options, see:
+#   http://docs.mongodb.org/manual/reference/configuration-options/
+
+# Where and how to store data.
+#  engine:
+#  mmapv1:
+#  wiredTiger:
+
+# where to write logging data.
+systemLog:
+  destination: file
+  logAppend: true
+  path: /opt/mongo/router/mongod.log
+  component:
+    command:
+      verbosity: 5
+
+# network interfaces
+net:
+  port: 27017
+  bindIp: 0.0.0.0
+
+
+
+#processManagement:
+processManagement:
+  fork: true
+  pidFilePath: /opt/mongo/router/mongod.pid
+  #timeZoneInfo: /usr/share/zoneinfo
+
+#security:
+
+#operationProfiling:
+
+#replication:
+
+#sharding:
+sharding:
+  configDB: C/{{ groups['mongo_shard_config_1'][0] }}:27017,{{ groups['mongo_shard_config_2'][0] }}:27017
+
+## Enterprise-Only Options:
+
+#auditLog:
+
+#snmp:
